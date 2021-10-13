@@ -1,0 +1,32 @@
+@use "sass:math
+
+";
+
+$mainColor:#58b;
+$highColor:#f00;
+@import url(./var.scss);
+
+$pd:10px 20px 30px 40px;
+$headings:(h1:2em,h2:5em,h3:1.2em);
+$direction:left;
+
+a{
+    color: $mainColor;
+    &:hover{
+        color: $highColor;
+    }
+}
+h1{
+    font-size: map-get($headings, h2);
+}
+.list{
+    padding: nth($pd,1);
+    float: $direction;
+    border-#{$direction}:1px solid #888;
+}
+
+@for $i from 1 through 6{
+    h#{$i}{
+        font-size: math.div(36,$i)px;
+    }
+}

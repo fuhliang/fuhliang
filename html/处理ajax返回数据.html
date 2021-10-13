@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #goodlist li{
+            list-style: none;
+            float: left;
+            width: 200px;
+            margin: 20px;
+        }
+        #goodlist li img{
+            width: 100%;
+        }
+        .price del{
+            color:silver;
+            margin-right: 10px;
+        }
+        .price{
+            color: tomato;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 用户名：<input type="text" id="username">
+    <script>
+        const username = document.querySelector("#username")
+        username.onchange = function () {
+            const name = username.value
+            const xhr = new XMLHttpRequest()
+            xhr.open('get', 'http://120.76.247.5:2003/api/user/check?username='+name, true)
+            xhr.send()
+        }
+    </script> -->
+    <div id="goodlist"></div>
+    <script>
+        const  goodlist = document.querySelector("#goodlist")
+
+        const xhr = new XMLHttpRequest()
+
+        xhr.onload = function(){
+            const data = JSON.parse(xhr.responseText)
+            const lis = data.data.result.map(item=>{
+                return `<li>
+                    <img src="http://120.76.247.5:2003${item.img_url}"/>
+                    <h4>${item.goods_name}</h4>
+                    <p>${item.category}</p>
+                    <p class="price"><del>${item.price}</del><span>${item.sales_price}</span></p>
+                    </li>`
+            })
+            goodlist.innerHTML = lis.join('')
+        }
+
+        xhr.open('get','http://120.76.247.5:2003/api/goods',true)
+        xhr.send()
+
+    </script>
+</body>
+
+</html>

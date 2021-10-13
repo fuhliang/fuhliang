@@ -1,0 +1,41 @@
+@import url(./var.scss);
+a {
+  color: #58b;
+}
+a:hover {
+  color: #f00;
+}
+
+h1 {
+  font-size: 5em;
+}
+
+.list {
+  padding: 10px;
+  float: left;
+  border-left: 1px solid #888;
+}
+
+h1 {
+  font-size: 36 px;
+}
+
+h2 {
+  font-size: 18 px;
+}
+
+h3 {
+  font-size: 12 px;
+}
+
+h4 {
+  font-size: 9 px;
+}
+
+h5 {
+  font-size: 7.2 px;
+}
+
+h6 {
+  font-size: 6 px;
+}

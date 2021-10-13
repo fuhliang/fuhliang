@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./utils/tools.js"></script>
+    <style>
+        .price del {
+            color: darkgray;
+            margin-right: 10px;
+        }
+
+        .price span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="goods"></div>
+    <script>
+        // const searchId = location.search.slice(1);
+        // const params = searchId.split('&')
+        // console.log(params); 
+        // const data = {}
+        // params.forEach(item=>{
+        //     const [key,value] = item.split('=')
+        //     data[key] = value
+        // })
+        // console.log(data);
+
+        const goods=document.querySelector('#goods')
+        const params = new URLSearchParams(location.search)
+        const id = params.get('id')
+
+        cdd('/goods/'+id,function({data}){
+            goods.innerHTML = `
+            <img src="http://120.76.247.5:2003${data.img_url}"/>
+            <h4>${data.goods_name}</h4>
+            <p>${data.category}</p>
+            <p class="price"><del>${data.price}</del><span>${data.sales_price}</span></p>`
+        })
+    </script>
+</body>
+</html>

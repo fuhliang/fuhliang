@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.1.1.js"></script>
+    <style>
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .cart-list {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ddd;
+        }
+        
+        .cart-list h4 {
+            margin: 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .cart-list img {
+            width: 60px;
+        }
+    
+        .cart-list li{position:relative;height:200px;}
+        .cart-list .btn-close{position:absolute;top:0;right:0;padding:5px;}
+        .cart-list .btn-close:hover{background-color:#f00;color:#fff;}
+        
+        .goods-list img {
+            width: 200px;
+        }
+        .span{color: #f00;}
+        </style>
+</head>
+<body>
+    <div class="goods-list">
+        <h4>产品列表</h4>
+        <ul>
+
+        </ul>
+    </div>
+
+    <script>
+        jQuery(function($){
+
+            $.ajaxSetup({
+                beforeSend(xhr){
+                    this.url = 'http://120.76.247.5:2003/api' + this.url
+                }
+            })
+
+            const res = $.ajax('/goods').then(function(res){
+                console.log('res=',res);
+                const {result} = res.data;
+                const html = result.map(item=>{
+                    return `<li>
+                            <img src="http://120.76.247.5:2003${item.img_url}"/>
+                            <h4>${item.goods_name}</h4>
+                            <p class="price"><del>${item.price}</del>&nbsp;<span class="span">${item.sales_price}</span></p>
+                        </li>`
+                }).join('')
+                $('.goods-list ul').html(html)
+            })
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./utils/tools.js"></script>
+    <style>
+        #goodlist li {
+            list-style: none;
+            width: 250px;
+            margin: 20px;
+            float: left;
+        }
+
+        #goodlist img {
+            width: 100%;
+        }
+
+        .price del {
+            color: darkgray;
+            margin-right: 10px;
+        }
+
+        .price span {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <select id="category"></select>
+    <div id="goodlist"></div>
+    <script>
+        const goodlist = document.querySelector("#goodlist")
+        const category = document.querySelector("#category")
+
+        // const xhr = new XMLHttpRequest()
+        // xhr.onload = function(){
+        //     const data = JSON.parse(xhr.responseText)
+        //     // console.log(data);
+        //     const lis = data.data.result.map(item=>{
+        //         return `<li>
+        //             <img src="http://120.76.247.5:2003${item.img_url}"/>
+        //             <h4>${item.goods_name}</h4>
+        //             <p>${item.category}</p>
+        //             <p class="price"><del>${item.price}</del><span>${item.sales_price}</span></p>
+        //             </li>`
+        //     })
+        //     goodlist.innerHTML = lis.join('')
+        // }
+        // xhr.open('get','http://120.76.247.5:2003/api/goods?category=女士表',true)
+        // xhr.send()
+        
+        const good = function(data){
+            const lis = data.data.result.map(item=>{
+                return `<li class="goods" data-id=${item._id}>
+                    <img src="http://120.76.247.5:2003${item.img_url}"/>
+                    <h4>${item.goods_name}</h4>
+                    <p>${item.category}</p>
+                    <p class="price"><del>${item.price}</del><span>${item.sales_price}</span></p>
+                    </li>`
+            })
+            goodlist.innerHTML = lis.join('')
+        }
+        cdd('/goods?category='+category.value,good)
+
+        goodlist.onclick = function({target}){
+            if(target.tagName === 'IMG'){
+                const currentLi = target.parentElement;
+                const {id} = currentLi.dataset
+                location.href = "goods.html?id="+id
+            }
+        }
+ 
+
+        // const xhr_category = new XMLHttpRequest()
+        // xhr_category.onload = function () {
+        //     const {data} = JSON.parse(xhr_category.responseText)
+        //     category.innerHTML = data.result.map(item => {
+        //         return `<option value="${item.text}">${item.text}</option>`
+        //     }).join('')
+        // }
+        // xhr_category.open('get', 'http://120.76.247.5:2003/api/category', true)
+        // xhr_category.send()
+        cdd('/category',({data})=>{
+            category.innerHTML = data.result.map(item => {
+                return `<option value="${item.text}">${item.text}</option>`
+            }).join('')
+            cdd('/goods?category='+category.value,good)
+        })
+
+        category.onchange = function () {
+            const cat = this.value
+            console.log(cat);
+            cdd('/goods?category='+cat,good)
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.1.1.js"></script>
+    <style>
+        .tab {
+            border: 2px solid #ddd;
+            padding: 2px;
+            width: 353px;
+        }
+
+        .tab header {
+            padding-bottom: 2px;
+            border-bottom: 2px solid #ddd;
+            overflow: hidden;
+        }
+
+        .tab header div {
+            float: left;
+            padding: 5px 15px;
+            border-right: 1px solid #ddd;
+        }
+
+        .tab .active {
+            background-color: rgb(40, 233, 153);
+            color: #fff;
+        }
+
+        .tab .content {
+            padding: 15px;
+            min-height: 290px;
+            position: relative
+        }
+
+        /* .tab .content div {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            right: 15px;
+            bottom: 15px
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="tab">
+		<header>
+			<div>Tab1</div>
+			<div>Tab2</div>
+			<div>Tab3</div>
+			<div>Tab4</div>
+			<div>Tab5</div>
+		</header>
+		<div class="content">
+			<div><img src="img/g1.jpg"></div>
+			<div><img src="img/g2.jpg"></div>
+			<div><img src="img/g3.jpg"></div>
+			<div><img src="img/g4.jpg"></div>
+			<div><img src="img/g5.jpg"></div>
+		</div>
+	</div>
+
+    <script>
+        jQuery(function($){
+            const $content = $('.content div')
+            const $tabsItem = $('.tab header div')
+
+            $content.not(':first').hide()
+
+            $tabsItem.first().addClass('active')
+
+            $tabsItem.on('click',function(){
+                const currentIndex = $(this).index()
+                $(this).addClass('active')
+                $(this).siblings().removeClass('active')
+
+                $content.eq(currentIndex).fadeIn()
+                $content.eq(currentIndex).siblings().hide()
+            })
+        })
+    </script>
+</body>
+
+</html>
